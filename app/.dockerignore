@@ -1,0 +1,17 @@
+node_modules
+playwright-report
+coverage
+dist
+test-results
+.git
+bootstrap/
+docs/
+images/
+.precomiit-config.yaml
+.terraform-docs.yml
+.tflint.hcl
+.tricvyignore.html
+README.md
+.envs
+*.tfvars
+.github/
