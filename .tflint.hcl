@@ -15,3 +15,7 @@ plugin "terraform" {
 tflint {
   required_version = "0.63.1"
 }
+
+rule "terraform_standard_module_structure" {
+  enabled = false
+}
