@@ -21,7 +21,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_ecr_repository.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/ecr_repository) | resource |
-| [aws_iam_openid_connect_provider.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/iam_openid_connect_provider) | resource |
+| [aws_iam_openid_connect_provider.ths](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/iam_openid_connect_provider) | resource |
 | [aws_iam_role.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/iam_role) | resource |
 | [aws_s3_bucket.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_public_access_block.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/s3_bucket_public_access_block) | resource |
