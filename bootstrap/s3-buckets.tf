@@ -2,6 +2,7 @@ resource "aws_s3_bucket" "this" {
   for_each      = local.buckets_settings
   bucket        = "${var.project_settings.project}-${each.key}-${data.aws_caller_identity.current.account_id}"
   force_destroy = each.value.force_destroy
+
   tags = {
     Name        = "${var.project_settings.project}-${each.key}"
     Description = each.value.desription
@@ -13,6 +14,7 @@ resource "aws_s3_bucket" "this" {
 resource "aws_s3_bucket_versioning" "this" {
   for_each = local.buckets_settings
   bucket   = aws_s3_bucket.this[each.key].id
+
   versioning_configuration {
     status = each.value.versioning ? "Enabled" : "Suspended"
   }
