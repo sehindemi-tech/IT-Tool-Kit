@@ -14,9 +14,7 @@ locals {
       sse_algorithm = "AES256"
     }
   }
-}
 
-locals {
   iam_roles = {
     plan = {
       description   = "GitHub Actions Plan role"
