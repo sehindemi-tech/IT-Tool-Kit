@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "this" {
     }
 
     condition {
-      test     = "StringEqual"
+      test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:aud"
       values   = ["sts.amazonaws.com"]
     }
@@ -29,5 +29,27 @@ data "aws_iam_policy_document" "this" {
       variable = "token.actions.githubusercontent.com:sub"
       values   = [each.value.sub_value]
     }
+  }
+}
+
+resource "aws_iam_role_policy" "role_policies" {
+  for_each = local.iam_roles
+  role     = aws_iam_role.this[each.key].id
+  policy   = data.aws_iam_policy_document.role_policies[each.key].json
+}
+
+data "aws_iam_policy_document" "role_policies" {
+  for_each = local.iam_roles
+
+  statement {
+    sid     = "S3StateAcess"
+    effect  = "Allow"
+    actions = each.value.s3_actions
+    resources = flatten([
+      for bucket in each.value.s3_buckets : [
+        aws_s3_bucket.this[bucket].arn,
+        "${aws_s3_bucket.this[bucket].arn}/*",
+      ]
+    ])
   }
 }
