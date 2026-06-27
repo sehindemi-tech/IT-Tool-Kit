@@ -14,7 +14,9 @@ No providers.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_networking"></a> [networking](#module\_networking) | ../../modules/networking | n/a |
 
 ## Resources
 
@@ -24,7 +26,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_project_settings"></a> [project\_settings](#input\_project\_settings) | The default settings for our IT tools project | <pre>object({<br/>    aws_region  = optional(string, "eu-west-2")<br/>    org         = optional(string, "sehindemi-tech")<br/>    project     = optional(string, "it-tool-kit")<br/>    envrionment = optional(string, "dev")<br/>    iac_managed = optional(string, "Terraform")<br/>  })</pre> | `{}` | no |
+| <a name="input_project_settings"></a> [project\_settings](#input\_project\_settings) | The default settings for our IT tools project | <pre>object({<br/>    aws_region  = optional(string, "eu-west-2")<br/>    org         = optional(string, "sehindemi-tech")<br/>    Project     = optional(string, "it-tool-kit")<br/>    Environment = optional(string, "dev")<br/>    Iac_managed = optional(string, "Terraform")<br/><br/>  })</pre> | `{}` | no |
 
 ## Outputs
 

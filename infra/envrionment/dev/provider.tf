@@ -14,9 +14,9 @@ provider "aws" {
 
   default_tags {
     tags = {
-      project     = var.project_settings.project
-      Envrionment = var.project_settings.Envrionment
-      Manged_By   = var.project_settings.iac_managed
+      Project     = var.project_settings.Project
+      Environment = var.project_settings.Environment
+      Managed_By  = var.project_settings.Iac_managed
     }
   }
 }
