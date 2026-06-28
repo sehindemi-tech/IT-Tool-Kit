@@ -56,4 +56,9 @@ locals {
       ip_address_type = "ipv4"
     }
   }
+  cloud_watch = {
+    name              = "/vpc/flow-logs"
+    log_group_class   = "STANDARD"
+    retention_in_days = 7
+  }
 }

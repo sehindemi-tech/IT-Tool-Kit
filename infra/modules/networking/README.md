@@ -18,7 +18,9 @@
 
 | Name | Type |
 |------|------|
+| [aws_cloudwatch_log_group.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/cloudwatch_log_group) | resource |
 | [aws_iam_role.flow_logs_iam](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.flow_logs_iam_policies_attachment](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_internet_gateway.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/internet_gateway) | resource |
 | [aws_route_table.private](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table) | resource |
 | [aws_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table) | resource |
@@ -35,6 +37,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_cloud_watch"></a> [cloud\_watch](#input\_cloud\_watch) | CLoud watch configuration for vpc flow logs | <pre>object({<br/>    name              = optional(string)<br/>    log_group_class   = optional(string, "STANDARD")<br/>    retention_in_days = optional(number, 7)<br/>  })</pre> | n/a | yes |
 | <a name="input_interface_endpoint"></a> [interface\_endpoint](#input\_interface\_endpoint) | Interface endpoint configuration | <pre>map(object({<br/>    service_name    = string<br/>    ip_address_type = optional(string, "ipv4")<br/>  }))</pre> | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The proects Name | `string` | n/a | yes |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | Public and Private Subnets for the VPC | <pre>map(object({<br/>    cidr_block              = string<br/>    availability_zone       = string<br/>    map_public_ip_on_launch = optional(string, false)<br/>    is_public               = optional(bool)<br/>  }))</pre> | n/a | yes |

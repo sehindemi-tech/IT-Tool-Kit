@@ -11,11 +11,3 @@ resource "aws_vpc_endpoint" "interface_endpoint" {
     Name = "${var.project_name}-interface-endpoints"
   }
 }
-
-variable "interface_endpoint" {
-  description = "Interface endpoint configuration"
-  type = map(object({
-    service_name    = string
-    ip_address_type = optional(string, "ipv4")
-  }))
-}

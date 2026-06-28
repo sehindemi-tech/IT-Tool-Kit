@@ -15,3 +15,9 @@ data "aws_iam_policy_document" "flow_logs_iam_policies" {
     }
   }
 }
+
+resource "aws_iam_role_policy_attachment" "flow_logs_iam_policies_attachment" {
+  role       = aws_iam_role.flow_logs_iam.id
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+}
+

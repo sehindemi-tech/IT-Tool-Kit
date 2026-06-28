@@ -33,3 +33,21 @@ variable "vpc_endpoints_sg" {
     ip_protocol = string
   })
 }
+
+variable "interface_endpoint" {
+  description = "Interface endpoint configuration"
+  type = map(object({
+    service_name    = string
+    ip_address_type = optional(string, "ipv4")
+  }))
+}
+
+
+variable "cloud_watch" {
+  description = "CLoud watch configuration for vpc flow logs"
+  type = object({
+    name              = optional(string)
+    log_group_class   = optional(string, "STANDARD")
+    retention_in_days = optional(number, 7)
+  })
+}
