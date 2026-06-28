@@ -17,3 +17,8 @@ variable "subnets" {
     is_public               = optional(bool)
   }))
 }
+
+variable "project_name" {
+  description = "The proects Name"
+  type        = string
+}
