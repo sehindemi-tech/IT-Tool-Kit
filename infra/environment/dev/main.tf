@@ -1,8 +1,7 @@
 module "networking" {
-  source       = "../../modules/networking"
-  vpc          = local.vpc
-  subnets      = local.subnets
-  project_name = local.project_name
-
-
+  source           = "../../modules/networking"
+  vpc              = local.vpc
+  subnets          = local.subnets
+  project_name     = local.project_name
+  vpc_endpoints_sg = local.security_group.vpc_endpoints_sg
 }

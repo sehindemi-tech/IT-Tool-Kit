@@ -22,3 +22,11 @@ variable "project_name" {
   description = "The proects Name"
   type        = string
 }
+
+variable "vpc_endpoints_sg" {
+  description = "Vpc endpoing security group"
+  type = object({
+    name        = optional(string)
+    description = optional(string)
+  })
+}

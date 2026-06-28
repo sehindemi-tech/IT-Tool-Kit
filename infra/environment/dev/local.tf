@@ -30,5 +30,11 @@ locals {
       is_public         = false
     }
   }
+  security_group = {
+    vpc_endpoints_sg = {
+      name        = "${var.project_settings.Project}-vpc-endpoint-sg"
+      description = "vpc-endpoint-sg"
+    }
+  }
   project_name = "IT-Tools-App"
 }
