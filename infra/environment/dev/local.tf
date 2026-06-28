@@ -1,4 +1,5 @@
 locals {
+  project_name = "IT-Tools-App"
   vpc = {
     cidr_block           = "10.0.0.0/16"
     enable_dns_support   = true
@@ -39,5 +40,20 @@ locals {
       ip_protocol = "tcp"
     }
   }
-  project_name = "IT-Tools-App"
+  interface_endpoint = {
+    ecr_api = {
+      service_name    = "com.amazonaws.eu-west-2.ecr.api"
+      ip_address_type = "ipv4"
+    }
+
+    ecr_dkr = {
+      service_name    = "com.amazonaws.eu-west-2.ecr.dkr"
+      ip_address_type = "ipv4"
+    }
+
+    cloudwatch_logs = {
+      service_name    = "com.amazonaws.eu-west-2.logs"
+      ip_address_type = "ipv4"
+    }
+  }
 }
