@@ -44,4 +44,14 @@
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | Public and Private Subnets for the VPC | <pre>map(object({<br/>    cidr_block              = string<br/>    availability_zone       = string<br/>    map_public_ip_on_launch = optional(string, false)<br/>    is_public               = optional(bool)<br/>  }))</pre> | n/a | yes |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | The VPC settings | <pre>object({<br/>    cidr_block           = string<br/>    enable_dns_hostnames = optional(bool, true)<br/>    enable_dns_support   = optional(bool, true)<br/>    vpc_name             = string<br/>  })</pre> | n/a | yes |
 | <a name="input_vpc_endpoints_sg"></a> [vpc\_endpoints\_sg](#input\_vpc\_endpoints\_sg) | Vpc endpoing security group | <pre>object({<br/>    name        = optional(string)<br/>    description = optional(string)<br/>    from_port   = number<br/>    to_port     = number<br/>    ip_protocol = string<br/>  })</pre> | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_endpoint_security_group_id"></a> [endpoint\_security\_group\_id](#output\_endpoint\_security\_group\_id) | The endpoints security group id |
+| <a name="output_private_route_table_id"></a> [private\_route\_table\_id](#output\_private\_route\_table\_id) | Private route table id |
+| <a name="output_private_subnets_id"></a> [private\_subnets\_id](#output\_private\_subnets\_id) | Private subnets IDs |
+| <a name="output_public_subnets_id"></a> [public\_subnets\_id](#output\_public\_subnets\_id) | Public subnets IDs |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The VPC id |
 <!-- END_TF_DOCS -->
