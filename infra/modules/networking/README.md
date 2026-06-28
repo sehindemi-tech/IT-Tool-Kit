@@ -21,6 +21,8 @@
 | [aws_internet_gateway.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/internet_gateway) | resource |
 | [aws_route_table.private](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table) | resource |
 | [aws_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table) | resource |
+| [aws_route_table_association.private_rt_association](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table_association) | resource |
+| [aws_route_table_association.public_rt_association](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route_table_association) | resource |
 | [aws_subnet.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/subnet) | resource |
 | [aws_vpc.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/vpc) | resource |
 

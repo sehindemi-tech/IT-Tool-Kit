@@ -18,3 +18,15 @@ resource "aws_route_table" "private" {
     Name = "${var.project_name}-private-rt"
   }
 }
+
+resource "aws_route_table_association" "public_rt_association" {
+  for_each       = { for key, value in var.subnets : key => value if value.is_public }
+  subnet_id      = aws_subnet.this[each.key].id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "private_rt_association" {
+  for_each       = { for key, value in var.subnets : key => value if !value.is_public }
+  subnet_id      = aws_subnet.this[each.key].id
+  route_table_id = aws_route_table.private.id
+}
