@@ -28,5 +28,8 @@ variable "vpc_endpoints_sg" {
   type = object({
     name        = optional(string)
     description = optional(string)
+    from_port   = number
+    to_port     = number
+    ip_protocol = string
   })
 }

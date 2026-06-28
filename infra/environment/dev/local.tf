@@ -34,6 +34,9 @@ locals {
     vpc_endpoints_sg = {
       name        = "${var.project_settings.Project}-vpc-endpoint-sg"
       description = "vpc-endpoint-sg"
+      from_port   = 443
+      to_port     = 443
+      ip_protocol = "tcp"
     }
   }
   project_name = "IT-Tools-App"
