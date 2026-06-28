@@ -30,4 +30,5 @@ locals {
       is_public         = false
     }
   }
+  project_name = "IT-Tools-App"
 }
