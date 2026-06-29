@@ -16,6 +16,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_dns"></a> [dns](#module\_dns) | ../../modules/dns | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ../../modules/networking | n/a |
 
 ## Resources

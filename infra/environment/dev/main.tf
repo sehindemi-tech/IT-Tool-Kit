@@ -7,3 +7,8 @@ module "networking" {
   interface_endpoint = local.interface_endpoint
   cloud_watch        = local.cloud_watch
 }
+
+module "dns" {
+  source = "../../modules/dns"
+  dns    = local.dns
+}

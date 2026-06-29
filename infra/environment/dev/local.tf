@@ -61,4 +61,7 @@ locals {
     log_group_class   = "STANDARD"
     retention_in_days = 7
   }
+  dns = {
+    zone_name = "it-tools.demitech.co.uk"
+  }
 }
