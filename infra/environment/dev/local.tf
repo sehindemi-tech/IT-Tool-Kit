@@ -56,18 +56,22 @@ locals {
       ip_address_type = "ipv4"
     }
   }
+
   cloud_watch = {
     name              = "/vpc/flow-logs"
     log_group_class   = "STANDARD"
     retention_in_days = 7
   }
+
   dns = {
     zone_name = "it-tools.sehindemi.com"
   }
+
   acm_settings = {
     domain_name = module.dns.zone_name
     zone_id     = module.dns.zone_id
   }
+
   alb_sg = {
     name        = "IT Tools ALB SG"
     description = "IT Tools ALB SG"
@@ -84,6 +88,17 @@ locals {
         to_port     = 443
         ip_protocol = "tcp"
         cidr_block  = "0.0.0.0/0"
+      }
+    }
+  }
+
+  alb_access_logs_bucket = {
+    bucket_name = "sehindemi-it-tools-alb-access-logs"
+    rule = {
+      id     = "expire-logs"
+      status = "Enabled"
+      expiration = {
+        days = 7
       }
     }
   }

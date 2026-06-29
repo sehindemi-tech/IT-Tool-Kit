@@ -1,5 +1,5 @@
 variable "project_name" {
-  description = "The proects Name"
+  description = "The projects Name"
   type        = string
 }
 
@@ -15,5 +15,21 @@ variable "alb_sg" {
       ip_protocol = string
       cidr_block  = string
     }))
+  })
+}
+
+variable "alb_access_logs_bucket" {
+  description = "ALB access log S3 bucket"
+  type = object({
+    bucket_name = string
+    rule = object({
+      id     = string
+      status = optional(string, "Enabled")
+
+      expiration = object({
+        days = optional(number, 7)
+      })
+    })
+
   })
 }

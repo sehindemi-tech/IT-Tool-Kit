@@ -19,7 +19,10 @@ module "acm" {
 }
 
 module "alb" {
-  source       = "../../modules/alb"
-  alb_sg       = local.alb_sg
-  project_name = local.project_name
+  source                 = "../../modules/alb"
+  alb_sg                 = local.alb_sg
+  project_name           = local.project_name
+  alb_access_logs_bucket = local.alb_access_logs_bucket
+
+
 }
