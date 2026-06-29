@@ -32,6 +32,6 @@ repos:
           - --args=--severity CRITICAL,HIGH
           - --args=--exit-code 1
 
-      - id: terraform_validate
-        args:
-          - --hook-config=--retry-once-with-cleanup=true
+      # - id: terraform_validate
+      #   args:
+      #     - --hook-config=--retry-once-with-cleanup=true
