@@ -12,3 +12,8 @@ module "dns" {
   source = "../../modules/dns"
   dns    = local.dns
 }
+
+module "acm" {
+  source       = "../../modules/acm"
+  acm_settings = local.acm_settings
+}

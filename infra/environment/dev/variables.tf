@@ -12,3 +12,4 @@ variable "project_settings" {
 
   default = {}
 }
+

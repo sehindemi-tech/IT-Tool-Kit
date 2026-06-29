@@ -62,6 +62,10 @@ locals {
     retention_in_days = 7
   }
   dns = {
-    zone_name = "it-tools.demitech.co.uk"
+    zone_name = "it-tools.sehindemi.com"
+  }
+  acm_settings = {
+    domain_name = module.dns.zone_name
+    zone_id     = module.dns.zone_id
   }
 }
