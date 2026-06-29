@@ -17,3 +17,9 @@ module "acm" {
   source       = "../../modules/acm"
   acm_settings = local.acm_settings
 }
+
+module "alb" {
+  source       = "../../modules/alb"
+  alb_sg       = local.alb_sg
+  project_name = local.project_name
+}

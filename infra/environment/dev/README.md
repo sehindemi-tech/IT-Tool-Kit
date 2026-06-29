@@ -17,6 +17,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_acm"></a> [acm](#module\_acm) | ../../modules/acm | n/a |
+| <a name="module_alb"></a> [alb](#module\_alb) | ../../modules/alb | n/a |
 | <a name="module_dns"></a> [dns](#module\_dns) | ../../modules/dns | n/a |
 | <a name="module_networking"></a> [networking](#module\_networking) | ../../modules/networking | n/a |
 

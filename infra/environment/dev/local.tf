@@ -68,4 +68,23 @@ locals {
     domain_name = module.dns.zone_name
     zone_id     = module.dns.zone_id
   }
+  alb_sg = {
+    name        = "IT Tools ALB SG"
+    description = "IT Tools ALB SG"
+    vpc_id      = module.networking.vpc_id
+    ingress_rule = {
+      http = {
+        from_port   = 80
+        to_port     = 80
+        ip_protocol = "tcp"
+        cidr_block  = "0.0.0.0/0"
+      }
+      https = {
+        from_port   = 443
+        to_port     = 443
+        ip_protocol = "tcp"
+        cidr_block  = "0.0.0.0/0"
+      }
+    }
+  }
 }
