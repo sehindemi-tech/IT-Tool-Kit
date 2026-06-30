@@ -31,4 +31,9 @@ module "alb" {
 module "ecs" {
   source         = "../../modules/ecs"
   ecs_cloudwatch = local.ecs_cloudwatch
+  ecs_iam_roles  = local.ecs_iam_roles
+
+
+
+
 }

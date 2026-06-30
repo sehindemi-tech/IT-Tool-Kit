@@ -157,4 +157,16 @@ locals {
     retention_in_days           = 7
   }
 
+  ecs_iam_roles = {
+    task_execution = {
+      name        = "${local.project_name}-ecs-task-execution"
+      description = "ECS task execution role"
+      policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"]
+    }
+    task_role = {
+      name        = "${local.project_name}-ecs-task-role"
+      description = "ECS application task role"
+      policy_arns = []
+    }
+  }
 }

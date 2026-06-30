@@ -8,3 +8,14 @@ variable "ecs_cloudwatch" {
     retention_in_days           = number
   })
 }
+
+
+variable "ecs_iam_roles" {
+  description = "The task execution iam role"
+  type = map(object({
+    name        = string
+    description = string
+    policy_arns = list(string)
+  }))
+}
+
