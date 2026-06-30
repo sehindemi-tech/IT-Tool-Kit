@@ -102,4 +102,15 @@ locals {
       }
     }
   }
+
+  alb = {
+    name                       = "it-tools-alb"
+    enable_deletion_protection = false
+    security_groups            = [module.networking.endpoint_security_group_id]
+    public_subnets             = module.networking.public_subnets_id
+    ip_address_type            = "ipv4"
+    access_logs = {
+      enabled = true
+    }
+  }
 }
