@@ -26,6 +26,9 @@ module "alb" {
   alb                    = local.alb
   alb_target_group       = local.alb_target_group
   alb_listener           = local.alb_listener
+}
 
-
+module "ecs" {
+  source         = "../../modules/ecs"
+  ecs_cloudwatch = local.ecs_cloudwatch
 }

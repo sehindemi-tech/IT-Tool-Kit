@@ -148,4 +148,13 @@ locals {
       certificate_arn = module.acm.certificate_arn
     }
   }
+
+  ecs_cloudwatch = {
+    skip_destroy                = false
+    deletion_protection_enabled = false
+    name                        = "/ecs/it-tools"
+    log_group_class             = "STANDARD"
+    retention_in_days           = 7
+  }
+
 }
