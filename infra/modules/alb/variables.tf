@@ -49,3 +49,38 @@ variable "alb" {
     })
   })
 }
+
+variable "alb_target_group" {
+  description = "The alb target group configuration"
+  type = object({
+    name                              = string
+    port                              = number
+    protocol                          = string
+    target_type                       = string
+    vpc_id                            = string
+    load_balancing_cross_zone_enabled = bool
+    ip_address_type                   = string
+
+    health_check = object({
+      enabled             = string
+      path                = string
+      port                = string
+      protocol            = string
+      matcher             = string
+      interval            = number
+      timeout             = number
+      healthy_threshold   = number
+      unhealthy_threshold = number
+    })
+  })
+}
+
+variable "alb_listener" {
+  description = "COnfiguration for HTTP and HTTPS listner"
+  type = map(object({
+    port            = number
+    protocol        = string
+    ssl_policy      = optional(string)
+    certificate_arn = optional(string)
+  }))
+}

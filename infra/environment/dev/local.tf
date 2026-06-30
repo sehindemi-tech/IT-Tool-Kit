@@ -113,4 +113,39 @@ locals {
       enabled = true
     }
   }
+
+  alb_target_group = {
+    name                              = "it-tools-tg"
+    port                              = 8080
+    protocol                          = "HTTP"
+    target_type                       = "ip"
+    vpc_id                            = module.networking.vpc_id
+    load_balancing_cross_zone_enabled = true
+    ip_address_type                   = "ipv4"
+
+    health_check = {
+      enabled             = true
+      path                = "/health"
+      port                = "traffic-port"
+      protocol            = "HTTP"
+      matcher             = "200"
+      interval            = 30
+      timeout             = 5
+      healthy_threshold   = 2
+      unhealthy_threshold = 3
+    }
+  }
+  alb_listener = {
+    http = {
+      port     = 80
+      protocol = "HTTP"
+    }
+
+    https = {
+      port            = 443
+      protocol        = "HTTPS"
+      ssl_policy      = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
+      certificate_arn = module.acm.certificate_arn
+    }
+  }
 }

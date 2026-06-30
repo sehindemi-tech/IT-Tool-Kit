@@ -24,6 +24,8 @@ module "alb" {
   project_name           = local.project_name
   alb_access_logs_bucket = local.alb_access_logs_bucket
   alb                    = local.alb
+  alb_target_group       = local.alb_target_group
+  alb_listener           = local.alb_listener
 
 
 }
