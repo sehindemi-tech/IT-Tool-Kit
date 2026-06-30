@@ -22,3 +22,8 @@ output "private_route_table_id" {
   description = "Private route table id"
   value       = aws_route_table.private.id
 }
+
+output "vpc_cidr" {
+  description = "vpc ipv4 cidr"
+  value       = aws_vpc.this.cidr_block
+}

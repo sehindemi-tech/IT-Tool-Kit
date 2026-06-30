@@ -19,3 +19,24 @@ variable "ecs_iam_roles" {
   }))
 }
 
+
+variable "ecs_security_group" {
+  description = "Configuration for the ECS security group"
+  type = object({
+    name        = string
+    description = string
+    vpc_id      = string
+    ingress_rule = object({
+      from_port   = number
+      to_port     = number
+      ip_protocol = string
+      cidr_ipv4   = string
+    })
+    egress_rule = object({
+      from_port   = number
+      to_port     = number
+      ip_protocol = string
+      cidr_ipv4   = string
+    })
+  })
+}

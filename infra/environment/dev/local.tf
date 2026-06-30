@@ -1,5 +1,7 @@
 locals {
   project_name = "IT-Tools-App"
+
+  #Networking module
   vpc = {
     cidr_block           = "10.0.0.0/16"
     enable_dns_support   = true
@@ -63,15 +65,19 @@ locals {
     retention_in_days = 7
   }
 
+
+  ### Dns Module
   dns = {
     zone_name = "it-tools.sehindemi.com"
   }
 
+  ### Acm Module
   acm_settings = {
     domain_name = module.dns.zone_name
     zone_id     = module.dns.zone_id
   }
 
+  ### Aplication Load Balancer Module
   alb_sg = {
     name        = "IT Tools ALB SG"
     description = "IT Tools ALB SG"
@@ -81,13 +87,21 @@ locals {
         from_port   = 80
         to_port     = 80
         ip_protocol = "tcp"
-        cidr_block  = "0.0.0.0/0"
+        cidr_ipv4   = "0.0.0.0/0"
       }
       https = {
         from_port   = 443
         to_port     = 443
         ip_protocol = "tcp"
-        cidr_block  = "0.0.0.0/0"
+        cidr_ipv4   = "0.0.0.0/0"
+      }
+    }
+    egress_rule = {
+      https = {
+        from_port   = 8080
+        to_port     = 8080
+        ip_protocol = "tcp"
+        cidr_ipv4   = module.networking.vpc_cidr
       }
     }
   }
@@ -149,6 +163,7 @@ locals {
     }
   }
 
+  ####ECS Module
   ecs_cloudwatch = {
     skip_destroy                = false
     deletion_protection_enabled = false
@@ -167,6 +182,24 @@ locals {
       name        = "${local.project_name}-ecs-task-role"
       description = "ECS application task role"
       policy_arns = []
+    }
+  }
+
+  ecs_security_group = {
+    name        = "${local.project_name}-ecs-sg"
+    description = "ECS security group"
+    vpc_id      = module.networking.vpc_id
+    ingress_rule = {
+      from_port   = 8080
+      to_port     = 8080
+      ip_protocol = "tcp"
+      cidr_ipv4   = module.networking.vpc_cidr
+    }
+    egress_rule = {
+      from_port   = 443
+      to_port     = 443
+      ip_protocol = "tcp"
+      cidr_ipv4   = module.networking.vpc_cidr
     }
   }
 }

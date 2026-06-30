@@ -13,7 +13,13 @@ variable "alb_sg" {
       from_port   = number
       to_port     = number
       ip_protocol = string
-      cidr_block  = string
+      cidr_ipv4   = string
+    }))
+    egress_rule = map(object({
+      from_port   = number
+      to_port     = number
+      ip_protocol = string
+      cidr_ipv4   = string
     }))
   })
 }
