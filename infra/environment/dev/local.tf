@@ -120,9 +120,9 @@ locals {
   alb = {
     name                       = "it-tools-alb"
     enable_deletion_protection = false
-    security_groups            = [module.networking.endpoint_security_group_id]
-    public_subnets             = module.networking.public_subnets_id
-    ip_address_type            = "ipv4"
+    # security_groups            = [module.networking.endpoint_security_group_id]
+    public_subnets  = module.networking.public_subnets_id
+    ip_address_type = "ipv4"
     access_logs = {
       enabled = true
     }
@@ -208,6 +208,44 @@ locals {
     setting = {
       name  = "containerInsights"
       value = "enabled"
+    }
+  }
+
+  ecs_task_definition = {
+    family                   = "${local.project_name}-task"
+    cpu                      = 256
+    memory                   = 512
+    network_mode             = "awsvpc"
+    requires_compatibilities = ["FARGATE"]
+    runtime_platform = {
+      operating_system_family = "LINUX"
+      cpu_architecture        = "X86_64"
+    }
+    container_definition = {
+      name                     = "${local.project_name}-container"
+      image                    = "441336784821.dkr.ecr.eu-west-2.amazonaws.com/sehindemi-tech-it-tools:latest"
+      essential                = true
+      privileged               = false
+      user                     = "nginx"
+      readonly_root_filesystem = true
+      port_mappings = {
+        container_port = 8080
+        protocol       = "tcp"
+      }
+      health_check = {
+        command      = ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+        interval     = 30
+        timeout      = 5
+        retries      = 3
+        start_period = 60
+      }
+
+      log_configuration = {
+        log_driver = "awslogs"
+        options = {
+          awslogs_stream_prefix = "ecs"
+        }
+      }
     }
   }
 }

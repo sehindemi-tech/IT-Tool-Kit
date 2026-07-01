@@ -46,7 +46,6 @@ variable "alb" {
   type = object({
     name                       = string
     enable_deletion_protection = optional(bool, false)
-    security_groups            = list(string)
     public_subnets             = list(string)
     ip_address_type            = optional(string, "ipv4")
 

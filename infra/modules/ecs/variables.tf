@@ -51,3 +51,45 @@ variable "ecs_cluster" {
     })
   })
 }
+
+variable "ecs_task_definition" {
+  description = "The ECS task definition configuration"
+  type = object({
+    family                   = string
+    cpu                      = number
+    memory                   = number
+    network_mode             = string
+    requires_compatibilities = list(string)
+    runtime_platform = object({
+      operating_system_family = string
+      cpu_architecture        = string
+    })
+    container_definition = object({
+      name                     = string
+      image                    = string
+      essential                = optional(bool, true)
+      privileged               = optional(bool, false)
+      user                     = string
+      readonly_root_filesystem = optional(bool, true)
+
+      port_mappings = object({
+        container_port = number
+        protocol       = optional(string, "tcp")
+      })
+
+      health_check = object({
+        command      = list(string)
+        interval     = optional(number, 30)
+        retries      = optional(number, 3)
+        start_period = optional(number, 60)
+        timeout      = optional(number, 5)
+      })
+      log_configuration = object({
+        log_driver = string
+        options = object({
+          awslogs_stream_prefix = string
+        })
+      })
+    })
+  })
+}
