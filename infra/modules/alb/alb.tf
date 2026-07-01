@@ -3,7 +3,7 @@ resource "aws_lb" "this" {
   name                             = var.alb.name
   internal                         = false
   load_balancer_type               = "application"
-  security_groups                  = var.alb.security_groups
+  security_groups                  = [aws_security_group.this.id]
   subnets                          = var.alb.public_subnets
   enable_deletion_protection       = var.alb.enable_deletion_protection
   enable_cross_zone_load_balancing = true

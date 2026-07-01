@@ -5,6 +5,7 @@ resource "aws_security_group" "endpoints_sg" {
   tags = {
     Name = "${var.project_name}-vpc-endpoints"
   }
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "endpoints_sg_ingress" {

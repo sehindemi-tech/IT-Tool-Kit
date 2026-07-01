@@ -33,9 +33,5 @@ module "ecs" {
   ecs_cloudwatch     = local.ecs_cloudwatch
   ecs_iam_roles      = local.ecs_iam_roles
   ecs_security_group = local.ecs_security_group
-
-
-
-
 }
 
