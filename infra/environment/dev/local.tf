@@ -202,4 +202,12 @@ locals {
       cidr_ipv4   = module.networking.vpc_cidr
     }
   }
+
+  ecs_cluster = {
+    name = "${local.project_name}-ecs-cluster"
+    setting = {
+      name  = "containerInsights"
+      value = "enabled"
+    }
+  }
 }

@@ -40,3 +40,14 @@ variable "ecs_security_group" {
     })
   })
 }
+
+variable "ecs_cluster" {
+  description = "ECS cluster setttings"
+  type = object({
+    name = string
+    setting = object({
+      name  = string
+      value = string
+    })
+  })
+}
