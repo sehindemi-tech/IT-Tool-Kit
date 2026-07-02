@@ -42,6 +42,14 @@ variable "interface_endpoint" {
   }))
 }
 
+variable "gateway_endpoint" {
+  description = "Gateway endpoint configuration "
+  type = object({
+    service_name      = string
+    vpc_endpoint_type = string
+  })
+}
+
 
 variable "cloud_watch" {
   description = "CLoud watch configuration for vpc flow logs"

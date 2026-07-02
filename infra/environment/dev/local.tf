@@ -59,6 +59,11 @@ locals {
     }
   }
 
+  gateway_endpoint = {
+    service_name      = "com.amazonaws.eu-west-2.s3"
+    vpc_endpoint_type = "Gateway"
+  }
+
   cloud_watch = {
     name              = "/vpc/flow-logs"
     log_group_class   = "STANDARD"
@@ -69,6 +74,14 @@ locals {
   ### Dns Module
   dns = {
     zone_name = "it-tools.sehindemi.com"
+  }
+
+  dns_alias = {
+    type = "A"
+    alias = {
+      alb_dns_name = module.alb.alb_dns_name
+      alb_zone_id  = module.alb.alb_zone_id
+    }
   }
 
   ### Acm Module
@@ -227,7 +240,7 @@ locals {
       essential                = true
       privileged               = false
       user                     = "nginx"
-      readonly_root_filesystem = true
+      readonly_root_filesystem = false
       port_mappings = {
         container_port = 8080
         protocol       = "tcp"
@@ -246,6 +259,32 @@ locals {
           awslogs_stream_prefix = "ecs"
         }
       }
+    }
+  }
+  ecs_service = {
+    name                               = "${local.project_name}-ecs-service"
+    availability_zone_rebalancing      = "ENABLED"
+    deployment_maximum_percent         = 200
+    deployment_minimum_healthy_percent = 100
+    desired_count                      = 2
+    enable_ecs_managed_tags            = true
+    health_check_grace_period_seconds  = 60
+    launch_type                        = "FARGATE"
+    propagate_tags                     = "SERVICE"
+    deployment_circuit_breaker = {
+      enable   = true
+      rollback = true
+    }
+
+    load_balancer = {
+      container_name   = local.ecs_task_definition.container_definition.name
+      container_port   = 8080
+      target_group_arn = module.alb.target_group_arn
+    }
+
+    network_configuration = {
+      assign_public_ip = false
+      subnets          = module.networking.private_subnets_id
     }
   }
 }

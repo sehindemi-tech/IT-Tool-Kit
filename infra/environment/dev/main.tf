@@ -4,13 +4,15 @@ module "networking" {
   subnets            = local.subnets
   project_name       = local.project_name
   vpc_endpoints_sg   = local.security_group.vpc_endpoints_sg
+  gateway_endpoint   = local.gateway_endpoint
   interface_endpoint = local.interface_endpoint
   cloud_watch        = local.cloud_watch
 }
 
 module "dns" {
-  source = "../../modules/dns"
-  dns    = local.dns
+  source    = "../../modules/dns"
+  dns       = local.dns
+  dns_alias = local.dns_alias
 }
 
 module "acm" {
@@ -35,5 +37,7 @@ module "ecs" {
   ecs_security_group  = local.ecs_security_group
   ecs_cluster         = local.ecs_cluster
   ecs_task_definition = local.ecs_task_definition
+  ecs_service         = local.ecs_service
+
 }
 

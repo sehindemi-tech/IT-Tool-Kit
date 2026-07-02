@@ -30,6 +30,7 @@
 | [aws_security_group.endpoints_sg](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/security_group) | resource |
 | [aws_subnet.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/subnet) | resource |
 | [aws_vpc.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/vpc) | resource |
+| [aws_vpc_endpoint.gateway_endpoint](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/vpc_endpoint) | resource |
 | [aws_vpc_endpoint.interface_endpoint](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/vpc_endpoint) | resource |
 | [aws_vpc_security_group_ingress_rule.endpoints_sg_ingress](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_iam_policy_document.flow_logs_iam_policies](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/data-sources/iam_policy_document) | data source |
@@ -39,6 +40,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloud_watch"></a> [cloud\_watch](#input\_cloud\_watch) | CLoud watch configuration for vpc flow logs | <pre>object({<br/>    name              = optional(string)<br/>    log_group_class   = optional(string, "STANDARD")<br/>    retention_in_days = optional(number, 7)<br/>  })</pre> | n/a | yes |
+| <a name="input_gateway_endpoint"></a> [gateway\_endpoint](#input\_gateway\_endpoint) | Gateway endpoint configuration | <pre>object({<br/>    service_name      = string<br/>    vpc_endpoint_type = string<br/>  })</pre> | n/a | yes |
 | <a name="input_interface_endpoint"></a> [interface\_endpoint](#input\_interface\_endpoint) | Interface endpoint configuration | <pre>map(object({<br/>    service_name    = string<br/>    ip_address_type = optional(string, "ipv4")<br/>  }))</pre> | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The proects Name | `string` | n/a | yes |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | Public and Private Subnets for the VPC | <pre>map(object({<br/>    cidr_block              = string<br/>    availability_zone       = string<br/>    map_public_ip_on_launch = optional(string, false)<br/>    is_public               = optional(bool)<br/>  }))</pre> | n/a | yes |

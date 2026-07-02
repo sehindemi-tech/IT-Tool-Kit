@@ -18,6 +18,7 @@
 
 | Name | Type |
 |------|------|
+| [aws_route53_record.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/6.52.0/docs/resources/route53_zone) | resource |
 
 ## Inputs
@@ -25,6 +26,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_dns"></a> [dns](#input\_dns) | The dns hosted zone configuration | <pre>object({<br/>    zone_name = string<br/>  })</pre> | n/a | yes |
+| <a name="input_dns_alias"></a> [dns\_alias](#input\_dns\_alias) | The dns alias record | <pre>object({<br/>    type = string<br/>    alias = object({<br/>      alb_dns_name = string<br/>      alb_zone_id  = string<br/>    })<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 

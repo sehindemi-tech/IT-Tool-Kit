@@ -11,3 +11,11 @@ resource "aws_vpc_endpoint" "interface_endpoint" {
     Name = "${var.project_name}-interface-endpoints"
   }
 }
+
+resource "aws_vpc_endpoint" "gateway_endpoint" {
+  vpc_id            = aws_vpc.this.id
+  service_name      = var.gateway_endpoint.service_name
+  vpc_endpoint_type = var.gateway_endpoint.vpc_endpoint_type
+  route_table_ids   = [aws_route_table.private.id]
+}
+
