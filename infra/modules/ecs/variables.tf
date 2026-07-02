@@ -54,16 +54,19 @@ variable "ecs_cluster" {
 
 variable "ecs_task_definition" {
   description = "The ECS task definition configuration"
+
   type = object({
     family                   = string
     cpu                      = number
     memory                   = number
     network_mode             = string
     requires_compatibilities = list(string)
+
     runtime_platform = object({
       operating_system_family = string
       cpu_architecture        = string
     })
+
     container_definition = object({
       name                     = string
       image                    = string
@@ -84,12 +87,35 @@ variable "ecs_task_definition" {
         start_period = optional(number, 60)
         timeout      = optional(number, 5)
       })
+
       log_configuration = object({
         log_driver = string
+
         options = object({
           awslogs_stream_prefix = string
         })
       })
     })
+  })
+}
+
+variable "ecs_app_auto_scalling_target" {
+  description = "The ECS auto scaling configuration"
+
+  type = object({
+    max_capacity = number
+    min_capacity = number
+  })
+}
+
+variable "app_autoscaling_policy" {
+  description = "Configuration for the auto scaling policy"
+
+  type = object({
+    policy_type        = string
+    cpu_target         = number
+    scale_in_cooldown  = number
+    scale_out_cooldown = number
+    memory_target      = number
   })
 }

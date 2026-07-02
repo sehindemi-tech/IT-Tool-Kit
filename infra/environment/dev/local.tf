@@ -287,4 +287,16 @@ locals {
       subnets          = module.networking.private_subnets_id
     }
   }
+  ecs_app_auto_scalling_target = {
+    max_capacity = 4
+    min_capacity = 2
+  }
+
+  app_autoscaling_policy = {
+    policy_type        = "TargetTrackingScaling"
+    cpu_target         = 70
+    memory_target      = 80
+    scale_in_cooldown  = 300
+    scale_out_cooldown = 60
+  }
 }

@@ -31,13 +31,14 @@ module "alb" {
 }
 
 module "ecs" {
-  source              = "../../modules/ecs"
-  ecs_cloudwatch      = local.ecs_cloudwatch
-  ecs_iam_roles       = local.ecs_iam_roles
-  ecs_security_group  = local.ecs_security_group
-  ecs_cluster         = local.ecs_cluster
-  ecs_task_definition = local.ecs_task_definition
-  ecs_service         = local.ecs_service
-
+  source                       = "../../modules/ecs"
+  ecs_cloudwatch               = local.ecs_cloudwatch
+  ecs_iam_roles                = local.ecs_iam_roles
+  ecs_security_group           = local.ecs_security_group
+  ecs_cluster                  = local.ecs_cluster
+  ecs_task_definition          = local.ecs_task_definition
+  ecs_service                  = local.ecs_service
+  ecs_app_auto_scalling_target = local.ecs_app_auto_scalling_target
+  app_autoscaling_policy       = local.app_autoscaling_policy
 }
 
