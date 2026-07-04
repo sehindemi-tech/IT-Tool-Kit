@@ -40,5 +40,9 @@ module "ecs" {
   ecs_service                  = local.ecs_service
   ecs_app_auto_scalling_target = local.ecs_app_auto_scalling_target
   app_autoscaling_policy       = local.app_autoscaling_policy
+  sns_topic_name               = local.sns_topic_name
+  sns_topic_subscription_email = local.sns_topic_subscription_email
+  cloudwatch_alarms            = local.cloudwatch_alarms
+
 }
 

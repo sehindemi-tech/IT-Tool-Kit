@@ -50,6 +50,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_alb_arn"></a> [alb\_arn](#output\_alb\_arn) | The ALB ARN |
 | <a name="output_alb_dns_name"></a> [alb\_dns\_name](#output\_alb\_dns\_name) | The name of the IT Tools ALB |
 | <a name="output_alb_security_group_id"></a> [alb\_security\_group\_id](#output\_alb\_security\_group\_id) | ALB security group ID |
 | <a name="output_alb_zone_id"></a> [alb\_zone\_id](#output\_alb\_zone\_id) | The ALB zone ID |

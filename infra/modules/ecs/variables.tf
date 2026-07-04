@@ -119,3 +119,31 @@ variable "app_autoscaling_policy" {
     memory_target      = number
   })
 }
+
+variable "sns_topic_name" {
+  description = "The name os the sns topic"
+  type        = string
+
+}
+
+variable "cloudwatch_alarms" {
+  description = "The Cloudwatch alarm metrics settings."
+  type = map(object({
+    alarm_name          = string
+    comparison_operator = string
+    evaluation_periods  = number
+    metric_name         = string
+    namespace           = string
+    period              = number
+    threshold           = number
+    alarm_description   = string
+    datapoints_to_alarm = number
+    dimensions          = map(string)
+    treat_missing_data  = string
+  }))
+}
+
+variable "sns_topic_subscription_email" {
+  description = "sns topic subscription email for ALARM state notification"
+  type        = string
+}

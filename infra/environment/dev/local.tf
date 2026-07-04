@@ -299,4 +299,80 @@ locals {
     scale_in_cooldown  = 300
     scale_out_cooldown = 60
   }
+
+  sns_topic_name               = "${local.project_name}-alerts"
+  sns_topic_subscription_email = "sehindemitech@gmail.com"
+
+  cloudwatch_alarms = {
+    task-count = {
+      alarm_name          = local.project_name
+      comparison_operator = "LessThanThreshold"
+      evaluation_periods  = 3
+      metric_name         = "LiveTaskCount"
+      namespace           = "AWS/ECS"
+      period              = 60
+      threshold           = 2
+      datapoints_to_alarm = 3
+      alarm_description   = "ECS running task count below 2 for  3 consecutive minutes"
+      dimensions = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = module.ecs.service_name
+      }
+      treat_missing_data = "breaching"
+    }
+    cpu = {
+      alarm_name          = local.project_name
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = 5
+      metric_name         = "CPUUtilization"
+      namespace           = "AWS/ECS"
+      period              = 60
+      threshold           = 80
+      alarm_description   = "ECS CPU utilization above 85% for 3 consecutive minutes"
+      datapoints_to_alarm = 3
+
+      dimensions = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = module.ecs.service_name
+      }
+
+      treat_missing_data = "notBreaching"
+    }
+
+    memory = {
+      alarm_name          = local.project_name
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = 5
+      metric_name         = "MemoryUtilization"
+      namespace           = "AWS/ECS"
+      period              = 60
+      threshold           = 80
+      alarm_description   = "ECS memory utilization above 80% for 3 consecutive minutes"
+      datapoints_to_alarm = 3
+      dimensions = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = module.ecs.service_name
+      }
+
+      treat_missing_data = "notBreaching"
+    }
+
+    alb-5xx = {
+      alarm_name          = local.project_name
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = 5
+      metric_name         = "HTTPCode_ELB_5XX_Count"
+      namespace           = "AWS/ApplicationELB"
+      period              = 60
+      threshold           = 10
+      alarm_description   = "ALB 5xx errors above 10 for 3 consecutive minutes"
+      datapoints_to_alarm = 4
+      dimensions = {
+        LoadBalancer = module.alb.alb_arn
+      }
+
+      treat_missing_data = "notBreaching"
+
+    }
+  }
 }
