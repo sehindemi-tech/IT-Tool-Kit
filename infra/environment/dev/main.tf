@@ -45,4 +45,3 @@ module "ecs" {
   cloudwatch_alarms            = local.cloudwatch_alarms
 
 }
-
