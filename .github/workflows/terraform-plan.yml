@@ -1,4 +1,4 @@
-name: Terraform Plan
+name: Terraform Plan, fmt,init, validate,tflint, tricy
 
 on:
   push:
@@ -12,6 +12,8 @@ permissions:
   contents: read
   id-token: write
   security-events: write
+  actions: read
+
 jobs:
   plan:
     runs-on: ubuntu-latest
@@ -46,7 +48,7 @@ jobs:
       - name: setup tflint
         uses: terraform-linters/setup-tflint@v6
         with:
-          tflint_version: 0.63.1
+          tflint_version: v0.63.1
 
       - name: tflint install
         run: tflint --init
@@ -60,9 +62,16 @@ jobs:
           scan-type: 'config'
           scan-ref: infra/
           format: 'sarif'
-          output: 'trivy-iac-results.sarif'
+          output: trivy-iac-results.sarif
           exit-code: '1'
-          severity: 'CRITICAL,HIGH'
+          severity: CRITICAL,HIGH
+          limit-severities-for-sarif: true
+
+      - name: Upload Trivy IaC results to GitHub Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-iac-results.sarif
 
       - name: Publish Trivy IAC scan results
         uses: actions/upload-artifact@v4
