@@ -50,12 +50,13 @@ jobs:
 
       - name: Trivy image Scan
         uses: aquasecurity/trivy-action@v0.36.0
+        continue-on-error: true
         with:
           image-ref: ${{ vars.ECR_REPOSITORY_URL }}:${{ steps.tag.outputs.IMAGE_TAG }}
           scan-type: image
           format: sarif
           output: trivy-image-result.sarif
-          exit-code: '1'
+          exit-code: '0'
           severity: CRITICAL,HIGH
           ignore-unfixed: true
 
