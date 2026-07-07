@@ -81,8 +81,7 @@ jobs:
           path: trivy-iac-results.sarif
 
       - name: Terraform plan
-        run: terraform -chdir=infra/environment/dev force-unlock -force  513aa4dd-8ffc-551a-2ca1-4d839409a5ab
-        # run: terraform -chdir=infra/environment/dev plan -out=tfplan
+        run: terraform -chdir=infra/environment/dev plan -out=tfplan
 
       - name: Publish plan artefact
         uses: actions/upload-artifact@v4
