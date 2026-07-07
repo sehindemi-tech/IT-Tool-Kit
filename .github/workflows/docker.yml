@@ -65,7 +65,7 @@ jobs:
         if: always()
         with:
           name: trivy-image-scan-${{ github.sha }}
-          path: trivy-image-result.sarif
+          path: app/trivy-image-result.sarif
 
       - name: Push image to ECR
         run: |
@@ -79,14 +79,13 @@ jobs:
           --task-definition ${{ vars.TASK_DEFINITION_FAMILY }} \
           --query taskDefinition \
           --region ${{ vars.AWS_REGION }} \
-          > task-definition.json
-
+          > ${{ github.workspace }}/task-definition.json
       - name: Update ECS task definition with new image
         id: task-update
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
-          container-name: ${{ vars.CONAINER_NAME }}
+          task-definition: ${{ github.workspace }}/task-definition.json
+          container-name: ${{ vars.CONTAINER_NAME }}
           image: ${{ vars.ECR_REPOSITORY_URL }}:latest
 
       - name: Deploy to ECS
