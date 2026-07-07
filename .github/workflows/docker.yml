@@ -1,0 +1,105 @@
+name: Docker build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - 'Dockerfile'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+
+jobs:
+  build-and-deploy:
+    defaults:
+      run:
+        working-directory: ./app
+
+    name: Build, Scan, Push, Deploy, Health Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4.3.1
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_APPLY_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tag
+        id: tag
+        run: echo "IMAGE_TAG=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: |
+          docker build \
+          -t ${{ vars.ECR_REPOSITORY_URL }}:${{ steps.tag.outputs.IMAGE_TAG }} \
+          -t ${{ vars.ECR_REPOSITORY_URL }}:latest \
+          .
+
+      - name: Trivy image Scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ vars.ECR_REPOSITORY_URL }}:${{ steps.tag.outputs.IMAGE_TAG }}
+          scan-type: image
+          format: sarif
+          output: trivy-image-result.sarif
+          exit-code: '1'
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+
+      - name: Publish Trivy Image scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-image-scan-${{ github.sha }}
+          path: trivy-image-result.sarif
+
+      - name: Push image to ECR
+        run: |
+          docker push ${{ vars.ECR_REPOSITORY_URL }}:${{ steps.tag.outputs.IMAGE_TAG }}
+          docker push ${{ vars.ECR_REPOSITORY_URL }}:latest
+
+
+      - name: Download current task defintion
+        run: |
+          aws ecs describe-task-definition \
+          --task-definition ${{ vars.TASK_DEFINITION_FAMILY }} \
+          --query taskDefinition \
+          --region ${{ vars.AWS_REGION }} \
+          > task-definition.json
+
+      - name: Update ECS task definition with new image
+        id: task-update
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition-family: task-definition.json
+          container-name: ${{ vars.CONAINER_NAME }}
+          image: docker push ${{ vars.ECR_REPOSITORY_URL }}:latest
+
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.task-update.outputs.task-definition }}
+          service: ${{ vars.ECS_SERVICE }}
+          cluster: ${{ vars.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Post-deploy health check
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://it-tools.sehindemi.com/health)
+          if [ "$STATUS" != "200" ]; then
+            echo "Health check failed — status $STATUS"
+            exit 1
+          fi

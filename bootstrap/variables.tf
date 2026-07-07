@@ -17,7 +17,7 @@ variable "ecr_repo" {
     name                 = optional(string, "it-tools")
     encryption_type      = optional(string, "AES256")
     force_destroy        = optional(bool, false)
-    image_tag_mutability = optional(string, "IMMUTABLE")
+    image_tag_mutability = optional(string, "MUTABLE")
     scan_on_push         = optional(bool, true)
   })
 
