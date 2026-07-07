@@ -20,7 +20,7 @@ locals {
       description   = "GitHub Actions Plan role"
       sub_condition = "StringLike"
       sub_value     = "repo:${var.project_settings.org}/${var.project_settings.github_repo}:*"
-      s3_actions    = ["s3:GetObject", "s3:ListBucketVersions", "s3:ListBucket", "s3:GetBucketVersioning"]
+      s3_actions    = ["s3:GetObject", "s3:ListBucketVersions", "s3:ListBucket", "s3:PutObject", "s3:GetBucketVersioning"]
       s3_buckets    = ["tfstate"]
     }
 
