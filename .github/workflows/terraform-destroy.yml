@@ -1,0 +1,48 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to destroy (dev/staging/prod)"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      confirm:
+        description: "Type DESTROY to confirm"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  Destroy:
+    runs-on: ubuntu-latest
+    name: Terraform Destroy
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4.3.1
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_DESTROY_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.2"
+
+      - name: Terraform init
+        run: terraform -chdir=infra/environment/dev init
+
+      - name: Terraform destroy
+        run: terraform -chdir=infra/environment/dev destroy -auto-approve
