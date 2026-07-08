@@ -2,7 +2,6 @@ name: Terraform Plan, fmt,init, validate,tflint, trivy
 
 on:
   push:
-    branches: [main]
     paths:
       - 'infra/environment/dev/**'
       - 'infra/modules/**'
